@@ -10,9 +10,10 @@ const TEXT_PLAIN_HEADER = {
 
 const SYSTEM_LOGIN = "32c767f4-f1e7-4931-9825-da8f1f2ba089";
 
-function createApp(express, bodyParser, createReadStream, crypto, http, mongoose, createProxyMiddleware, pug) {
+function createApp(express, bodyParser, createReadStream, crypto, http, mongoose, createProxyMiddleware, pug, dotenv) {
 
     const connectionPool = new Map();
+    dotenv.config();
 
     function getUserModelForConnection(conn) {
         try {
@@ -76,7 +77,7 @@ function createApp(express, bodyParser, createReadStream, crypto, http, mongoose
     app.use(corsMiddleware);
 
     app.use('/wordpress', createProxyMiddleware({
-        target: 'http://localhost:8000',
+        target: process.env.WORDPRESS_HOST,
         changeOrigin: true,
         pathRewrite: (path, req) => {
             return path.replace(/^\/wordpress/, '');

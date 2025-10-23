@@ -5,6 +5,7 @@ import http from "http";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 import pug from "pug";
 
 // const express = require("express");
@@ -21,6 +22,6 @@ import {createProxyMiddleware} from "http-proxy-middleware";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = appSrc(express, bodyParser, createReadStream, crypto, http, mongoose, createProxyMiddleware, pug);
+const app = appSrc(express, bodyParser, createReadStream, crypto, http, mongoose, createProxyMiddleware, pug, dotenv);
 
 app.listen(3000);
