@@ -3,7 +3,9 @@ import { createReadStream } from "fs";
 import crypto from "crypto";
 import http from "http";
 import bodyParser from "body-parser";
+import mongoose from "mongoose";
 import { fileURLToPath } from 'url';
+import pug from "pug";
 
 // const express = require("express");
 // const crypto = require("crypto");
@@ -12,12 +14,13 @@ import { fileURLToPath } from 'url';
 // const { createApp } = require("./app.js");
 // const { createReadStream } = require("fs");
 
-import { createApp } from "./app.js";
+import appSrc from "./app.js";
 import * as path from "node:path";
+import {createProxyMiddleware} from "http-proxy-middleware";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = createApp(express, bodyParser, createReadStream, `${__dirname}/app.js`, crypto, http);
+const app = appSrc(express, bodyParser, createReadStream, crypto, http, mongoose, createProxyMiddleware, pug);
 
 app.listen(3000);
